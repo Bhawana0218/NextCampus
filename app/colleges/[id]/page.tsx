@@ -14,6 +14,7 @@ import {
   HiOutlineArrowLeft,
 } from "react-icons/hi2";
 import { HiOutlineScale } from "react-icons/hi";
+import { HiOutlineArrowTopRightOnSquare } from "react-icons/hi2";
 import SaveButton from "./SaveButton";
 
 export async function generateMetadata({
@@ -180,6 +181,17 @@ export default async function CollegeDetailPage({
             <HiOutlineScale className="w-4 h-4" />
             Add to Compare
           </Link>
+          {college.applyLink && (
+            <a
+              href={college.applyLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-green-600 hover:bg-green-700 rounded-xl transition-colors"
+            >
+              <HiOutlineArrowTopRightOnSquare className="w-4 h-4" />
+              Apply Now
+            </a>
+          )}
           <div className="ml-auto text-right">
             <p className="text-xs text-slate-500">Annual Fees</p>
             <p className="text-xl font-bold text-slate-900">
@@ -251,6 +263,45 @@ export default async function CollegeDetailPage({
               </div>
             </section>
 
+            {/* AI Insight */}
+            {college.aiSummary && (
+              <section className="bg-gradient-to-r from-indigo-50 to-violet-50 rounded-2xl border border-indigo-100 p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-lg">🤖</span>
+                  <h2 className="text-lg font-semibold text-slate-900">AI Intelligence Summary</h2>
+                  <span className="text-xs bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full font-medium">NextCampus AI</span>
+                </div>
+                <p className="text-slate-700 leading-relaxed text-sm">{college.aiSummary}</p>
+              </section>
+            )}
+
+            {/* Career Path Explorer */}
+            {college.topRecruiters && college.topRecruiters.length > 0 && (
+              <section className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+                <h2 className="text-lg font-semibold text-slate-900 mb-4">🧭 Career Path Explorer</h2>
+                <p className="text-sm text-slate-500 mb-4">After graduating from {college.name}, students typically join:</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
+                  {college.topRecruiters.map((company: string) => (
+                    <div key={company} className="flex items-center gap-2 bg-slate-50 rounded-xl p-3 border border-slate-100">
+                      <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold text-xs flex-shrink-0">
+                        {company.charAt(0)}
+                      </div>
+                      <span className="text-sm font-medium text-slate-800 truncate">{company}</span>
+                    </div>
+                  ))}
+                </div>
+                {college.avgPackage > 0 && (
+                  <div className="bg-green-50 rounded-xl p-4 flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-green-800">Average Package</p>
+                      <p className="text-xs text-green-600 mt-0.5">Median CTC for graduating batch</p>
+                    </div>
+                    <div className="text-2xl font-black text-green-700">₹{college.avgPackage} LPA</div>
+                  </div>
+                )}
+              </section>
+            )}
+
             {/* Reviews */}
             <section className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
               <h2 className="text-lg font-semibold text-slate-900 mb-4">
@@ -291,6 +342,7 @@ export default async function CollegeDetailPage({
                 { label: "Annual Fees", value: `₹${(college.fees / 100000).toFixed(1)}L` },
                 { label: "Rating", value: `${college.rating} / 5.0` },
                 { label: "Placements", value: college.placements },
+                { label: "Avg Package", value: college.avgPackage > 0 ? `₹${college.avgPackage} LPA` : "N/A" },
                 { label: "Established", value: college.established.toString() },
                 { label: "Total Students", value: college.totalStudents.toLocaleString("en-IN") },
                 { label: "College Type", value: college.type },

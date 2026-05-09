@@ -54,6 +54,7 @@ function HomeContent() {
   });
   const [compareList, setCompareList] = useState<string[]>([]);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [trendingColleges, setTrendingColleges] = useState<College[]>([]);
   const { savedIds, toggleSave } = useSaved();
   const abortRef = useRef<AbortController | null>(null);
 
@@ -146,7 +147,7 @@ function HomeContent() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-medium mb-6">
             <HiOutlineAcademicCap className="w-4 h-4" />
-            <span>25+ Top Colleges Listed</span>
+            <span>India&apos;s College Decision Intelligence System</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
             Find Your Perfect
@@ -182,6 +183,14 @@ function HomeContent() {
                 {type}s
               </button>
             ))}
+          </div>
+          <div className="mt-6">
+            <Link
+              href="/recommend"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-yellow-400 text-slate-900 font-bold rounded-xl hover:bg-yellow-300 transition-colors text-sm shadow-lg"
+            >
+              Find My Best College Match
+            </Link>
           </div>
         </div>
       </section>

@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { HiOutlineAcademicCap, HiOutlineMenu, HiX } from "react-icons/hi";
-import { HiOutlineBookmark, HiOutlineArrowRightOnRectangle } from "react-icons/hi2";
+import {  HiOutlineMenu, HiX } from "react-icons/hi";
+import { HiOutlineBookmark, HiOutlineArrowRightOnRectangle} from "react-icons/hi2";
 
 export default function Navbar() {
   const { user, loading, logout } = useAuth();
@@ -38,6 +38,12 @@ export default function Navbar() {
               className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
             >
               Compare
+            </Link>
+            <Link
+              href="/recommend"
+              className="px-4 py-2 text-sm font-medium text-violet-600 hover:text-violet-700 hover:bg-violet-50 rounded-lg transition-colors flex items-center gap-1.5"
+            >
+              Find My College
             </Link>
             {user && (
               <Link
@@ -112,6 +118,13 @@ export default function Navbar() {
             className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg"
           >
             Compare
+          </Link>
+          <Link
+            href="/recommend"
+            onClick={() => setMenuOpen(false)}
+            className="block px-3 py-2 text-sm font-medium text-violet-600 hover:bg-violet-50 rounded-lg flex items-center gap-1.5"
+          >
+            Find My College
           </Link>
           {user && (
             <Link

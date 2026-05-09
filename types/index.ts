@@ -15,6 +15,13 @@ export interface College {
   type: CollegeType;
   established: number;
   totalStudents: number;
+  // Intelligence fields
+  applyLink: string;
+  avgPackage: number;       // in LPA
+  topRecruiters: string[];
+  aiSummary: string;
+  trending: boolean;
+  searchCount: number;
   createdAt: string;
 }
 
@@ -22,6 +29,9 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  rank?: number | null;
+  budget?: number | null;
+  interests: string[];
   createdAt: string;
 }
 
@@ -62,4 +72,21 @@ export interface CollegeFilters {
   course?: string;
   page?: number;
   pageSize?: number;
+}
+
+export interface RecommendInput {
+  rank?: number;
+  budget?: number;
+  location?: string;
+  branch?: string;
+}
+
+export interface CollegeWithScore extends College {
+  fitScore: number;
+  fitBreakdown: {
+    fees: number;
+    placement: number;
+    rating: number;
+    location: number;
+  };
 }

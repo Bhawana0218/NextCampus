@@ -8,21 +8,28 @@ datasource db {
 }
 
 model College {
-  id          String   @id @default(cuid())
-  name        String
-  location    String
-  state       String
-  fees        Int
-  rating      Float
-  description String
-  placements  String
-  image       String
-  courses     String[]
-  facilities  String[]
-  type        String   // "IIT" | "NIT" | "Private" | "Deemed" | "State"
-  established Int
+  id            String   @id @default(cuid())
+  name          String
+  location      String
+  state         String
+  fees          Int
+  rating        Float
+  description   String
+  placements    String
+  image         String
+  courses       String[]
+  facilities    String[]
+  type          String   // "IIT" | "NIT" | "Private" | "Deemed" | "State"
+  established   Int
   totalStudents Int
-  createdAt   DateTime @default(now())
+  // Product-level intelligence fields
+  applyLink     String   @default("")
+  avgPackage    Int      @default(0)   // in LPA (lakhs per annum)
+  topRecruiters String[] @default([])
+  aiSummary     String   @default("")  // AI-generated pros/cons summary
+  trending      Boolean  @default(false)
+  searchCount   Int      @default(0)
+  createdAt     DateTime @default(now())
 
   savedBy SavedCollege[]
 }
@@ -32,6 +39,10 @@ model User {
   name      String
   email     String   @unique
   password  String
+  // Student profile for personalization
+  rank      Int?
+  budget    Int?
+  interests String[] @default([])
   createdAt DateTime @default(now())
 
   savedColleges SavedCollege[]
