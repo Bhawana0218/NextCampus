@@ -30,13 +30,17 @@ export default function SaveButton({
     setLoading(true);
     try {
       if (saved) {
-        const res = await fetch(`/api/saved/${collegeId}`, { method: "DELETE" });
+        const res = await fetch(`/api/saved/${collegeId}`, {
+          method: "DELETE",
+          credentials: "include",
+        });
         if (res.ok) setSaved(false);
       } else {
         const res = await fetch("/api/saved", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ collegeId }),
+          credentials: "include",
         });
         if (res.ok) setSaved(true);
       }

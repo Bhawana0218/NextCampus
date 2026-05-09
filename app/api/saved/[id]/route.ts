@@ -1,13 +1,15 @@
 import { NextRequest } from "next/server";
-import { getUserFromRequest } from "@/lib/auth";
+import { getAuthUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const authUser = getUserFromRequest(request);
+    const authUser = await getAuthUser();
     if (!authUser) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }

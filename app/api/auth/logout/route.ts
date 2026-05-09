@@ -1,10 +1,16 @@
 import { COOKIE_NAME_EXPORT } from "@/lib/auth";
+import { NextResponse } from "next/server";
 
 export async function POST() {
-  const response = Response.json({ message: "Logged out successfully" });
-  response.headers.set(
-    "Set-Cookie",
-    `${COOKIE_NAME_EXPORT}=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax`
-  );
+  const response = NextResponse.json({ message: "Logged out successfully" });
+  response.cookies.set({
+    name: COOKIE_NAME_EXPORT,
+    value: "",
+    httpOnly: true,
+    path: "/",
+    maxAge: 0,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
   return response;
 }

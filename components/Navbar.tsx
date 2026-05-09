@@ -4,7 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import {  HiOutlineMenu, HiX } from "react-icons/hi";
-import { HiOutlineBookmark, HiOutlineArrowRightOnRectangle} from "react-icons/hi2";
+import {
+  HiOutlineAcademicCap,
+  HiOutlineBookmark,
+  HiOutlineArrowRightOnRectangle,
+} from "react-icons/hi2";
 
 export default function Navbar() {
   const { user, loading, logout } = useAuth();
@@ -17,8 +21,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center group-hover:bg-indigo-700 transition-colors">
-              {/* <HiOutlineAcademicCap className="w-5 h-5 text-white" /> */}
-              <img src="https://thfvnext.bing.com/th/id/OIP.Qk99hXbq7ejvAmg6wGHLigHaHa?w=183&h=183&c=7&r=0&o=7&cb=thfvnext&dpr=1.4&pid=1.7&rm=3" alt="Logo"/>
+              <HiOutlineAcademicCap className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-xl text-slate-900">
               Next<span className="text-indigo-600">Campus</span>

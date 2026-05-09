@@ -1,11 +1,13 @@
 import { NextRequest } from "next/server";
-import { getUserFromRequest } from "@/lib/auth";
+import { getAuthUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
-export async function GET(request: NextRequest) {
+export const dynamic = "force-dynamic";
+
+export async function GET() {
   try {
-    const authUser = getUserFromRequest(request);
+    const authUser = await getAuthUser();
     if (!authUser) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -29,7 +31,7 @@ const saveSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    const authUser = getUserFromRequest(request);
+    const authUser = await getAuthUser();
     if (!authUser) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }

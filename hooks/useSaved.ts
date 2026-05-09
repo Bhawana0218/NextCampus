@@ -8,7 +8,10 @@ export function useSaved() {
 
   const fetchSaved = useCallback(async () => {
     try {
-      const res = await fetch("/api/saved");
+      const res = await fetch("/api/saved", {
+        credentials: "include",
+        cache: "no-store",
+      });
       if (res.ok) {
         const data = await res.json();
         const ids = new Set<string>(
@@ -30,7 +33,10 @@ export function useSaved() {
       setLoading(true);
       try {
         if (savedIds.has(collegeId)) {
-          const res = await fetch(`/api/saved/${collegeId}`, { method: "DELETE" });
+          const res = await fetch(`/api/saved/${collegeId}`, {
+            method: "DELETE",
+            credentials: "include",
+          });
           if (res.ok) {
             setSavedIds((prev) => {
               const next = new Set(prev);
@@ -44,6 +50,7 @@ export function useSaved() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ collegeId }),
+            credentials: "include",
           });
           if (res.ok) {
             setSavedIds((prev) => new Set([...prev, collegeId]));

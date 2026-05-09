@@ -25,7 +25,10 @@ export default function SavedPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/saved");
+      const res = await fetch("/api/saved", {
+        credentials: "include",
+        cache: "no-store",
+      });
       if (res.status === 401) {
         router.push("/auth/login");
         return;
@@ -47,7 +50,10 @@ export default function SavedPage() {
   const handleRemove = async (collegeId: string) => {
     setRemovingId(collegeId);
     try {
-      const res = await fetch(`/api/saved/${collegeId}`, { method: "DELETE" });
+      const res = await fetch(`/api/saved/${collegeId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
       if (res.ok) {
         setSaved((prev) => prev.filter((s) => s.collegeId !== collegeId));
       }
@@ -59,7 +65,10 @@ export default function SavedPage() {
   const handleClearAll = async () => {
     if (!confirm("Remove all saved colleges?")) return;
     for (const item of saved) {
-      await fetch(`/api/saved/${item.collegeId}`, { method: "DELETE" });
+      await fetch(`/api/saved/${item.collegeId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
     }
     setSaved([]);
   };

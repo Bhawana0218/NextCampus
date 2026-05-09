@@ -130,7 +130,10 @@ function HomeContent() {
   };
 
   const handleSave = async (id: string) => {
-    const res = await fetch("/api/auth/me");
+    const res = await fetch("/api/auth/me", {
+      credentials: "include",
+      cache: "no-store",
+    });
     if (!res.ok) {
       router.push("/auth/login");
       return;

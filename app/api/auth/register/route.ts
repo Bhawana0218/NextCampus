@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { signToken, COOKIE_NAME_EXPORT } from "@/lib/auth";
@@ -40,16 +40,20 @@ export async function POST(request: NextRequest) {
 
     const token = signToken({ id: user.id, email: user.email, name: user.name });
 
-    const response = Response.json({
+    const response = NextResponse.json({
       message: "Account created successfully",
       user: { id: user.id, name: user.name, email: user.email },
     });
 
-    // Set HTTP-only cookie
-    response.headers.set(
-      "Set-Cookie",
-      `${COOKIE_NAME_EXPORT}=${token}; HttpOnly; Path=/; Max-Age=${7 * 24 * 60 * 60}; SameSite=Lax`
-    );
+    response.cookies.set({
+      name: COOKIE_NAME_EXPORT,
+      value: token,
+      httpOnly: true,
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
 
     return response;
   } catch (error) {
